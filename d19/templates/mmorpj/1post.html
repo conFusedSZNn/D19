@@ -1,0 +1,74 @@
+{% extends 'mmorpj/index.html' %}
+ {% block content %}
+  <h1 class="mt-4">Объявление: {{get_post.title}}</h1>
+      <p><a href="/mmorpj">Вернуться назад</a></p>
+
+  <p> Дата: {{get_post.date_of_post}}</p>
+  <p> Заголовок: {{get_post.title}}</p>
+  <p> Текст: {{get_post.text}}</p>
+
+<p>Отклики {{get_post.comments_articles.all.count}}</p>
+<hr>
+<p>Добавить отклик</p>
+
+
+{% if messages %}
+<div class="alert alert-success">
+    {% for m in messages %}
+    {{m}}
+    {% endfor %}
+</div>
+{% endif %}
+
+
+
+<ul>
+
+{% for item in get_post.comments_articles.all%}
+<li>
+    Автор отклика:{{item.author_reply}}<br>
+    Статус статьи:{{item.status}}<br>
+    {{item.reply_text}}<br>
+
+    </li>
+    {% endfor%}
+
+
+
+
+</ul>
+
+<div class="col-4">
+
+
+    <form action=""  id="add_form" method="post">
+          {% csrf_token %}
+          {{form}}
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+        <button form="add_form" type="submit" class="btn btn-primary">Создать</button>
+      </div>
+    </div>
+
+
+{% endblock content %}
+
+
+
+
+
+
+
+
+
+
+
+   <button> <a href="#"> Твои объявения </a></button>
+    <button> <a href="#"> Редактировать </a></button>
+</div>
+
+
+
+

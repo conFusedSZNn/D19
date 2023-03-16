@@ -1,0 +1,74 @@
+{% extends 'mmorpj/index.html' %}
+
+{% block content %}
+<h1 class="mt-4">Изменение объявления</h1>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Создать новое объявление
+</button>
+
+{% if update %}
+<p style="mt-4">Страница Редактирования</p>
+  <p><a href="{% url 'edit_page' %}">Вернуться назад</a></p>
+
+
+<form id="update_data" method="post">
+          {% csrf_token %}
+          {{form}}
+        </form>
+<button form="update_data" type="submit" class="btn btn-primary">Обновить</button>
+{% else %}
+
+<table class="table table-bordered mt-4">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">Дата</th>
+      <th scope="col">Название</th>
+      <th scope="col">Категория</th>
+        <th scope="col">Редактирование</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in list_posts %}
+
+
+  <tr {% if i.id|slugify == request.GET.id %} style="background:blue" {% endif %}>
+      <th> {{i.id}} </th>
+      <td>{{i.date_of_post}} - {{i.author}}</td>
+      <td>{{i.title}}</td>
+      <td>{% for category_link in category_list %}
+                {{ category_link }}
+          {% endfor %}</td>
+      <td><a href="{% url 'update_page' i.id %}">редактировать</a></td>
+
+    </tr>
+        {% endfor %}
+  </tbody>
+</table>
+
+{% endif %}
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Создать объявление</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="add_form" method="post">
+          {% csrf_token %}
+          {{form}}
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+        <button form="add_form" type="submit" class="btn btn-primary">Создать</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,15 @@
+{% extends 'flatpages/index.html' %}
+
+
+
+{% block title %}
+Posts
+{% endblock title %}
+
+
+{% block content %}
+<h1>Все новости:</h1>
+<button> <a href="detail/<int:pk>"> Твои объявения </a></button>
+<button> <a href="create/"> Создать объявление </a></button>
+{% endblock content %}
+
